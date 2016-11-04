@@ -20,13 +20,19 @@ public class ProjectileBouncing : Projectile {
 
     // Update is called once per frame
     void Update () {
-        float moveDistance = speed * Time.deltaTime;
+        transform.forward = rb.velocity;
+        float moveDistance = rb.velocity.magnitude * Time.deltaTime;
         CheckCollisions(moveDistance);
     }
 
     protected override void OnHitObject(Collider c, Vector3 hitPoint)
     {
-        
+        IDamageable damageableObject = c.GetComponent<IDamageable>();
+        if (damageableObject != null)
+        {
+            damageableObject.TakeHit(damage, hitPoint, transform.forward);
+            GameObject.Destroy(gameObject);
+        }
     }
 
 
