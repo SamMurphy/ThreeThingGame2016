@@ -40,5 +40,9 @@ public class PlayerScript : MonoBehaviour {
         {
             gunController.EquipGun(2);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            gunController.EquipGun(3);
+        }
     }
 }
