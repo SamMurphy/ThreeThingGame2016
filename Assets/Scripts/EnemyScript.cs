@@ -31,8 +31,7 @@ public class EnemyScript : MonoBehaviour
     {
         health = maxHealth;
         bodyParts = GetComponentsInChildren<Transform>();
-        GravityDeath(new Vector3(0, 1, 0));
-        //GetComponent<NavMeshAgent>().destination = target.transform.position;
+        GetComponent<NavMeshAgent>().destination = target.transform.position;
     }
 	
 	// Update is called once per frame
@@ -52,7 +51,7 @@ public class EnemyScript : MonoBehaviour
         }
         else
         {
-            //GetComponent<NavMeshAgent>().destination = target.transform.position;
+            GetComponent<NavMeshAgent>().destination = target.transform.position;
             if (Vector3.Distance(transform.position, target.transform.position) < range)
             {
                 RaycastHit hit;
