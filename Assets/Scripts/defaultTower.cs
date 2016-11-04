@@ -8,8 +8,10 @@ public class defaultTower : MonoBehaviour
     GameObject currentTarget = null;
     public float range = 10f;
     public GameObject[] enemies;
-    bool fired = false;
-    public GameObject bullet;
+    public Projectile projectile;
+	public float msBetweenShots = 500f;
+	float nextShotTime;
+	public float shotSpeed;
 
 
     // Use this for initialization
@@ -32,13 +34,16 @@ public class defaultTower : MonoBehaviour
             foreach (GameObject enemy in enemies)
             {
                 Vector3 distance = transform.position - enemy.transform.position;
-                if (distance.magnitude > closestDistance)
+				if (distance.magnitude > closestDistance && distance.magnitude < range)
                     potentialTarget = enemy;
             }
 
             // If a enemy is found, make them our target
-            if (potentialTarget != null)
-                currentTarget = potentialTarget;
+			if (potentialTarget != null) 
+			{
+				currentTarget = potentialTarget;
+				nextShotTime = Time.time + msBetweenShots / 1000f;
+			}
         }
         else if (currentTarget != null)
         {
@@ -50,11 +55,12 @@ public class defaultTower : MonoBehaviour
             else
             {
                 transform.LookAt(currentTarget.transform);
-                if (!fired)
+				if (Time.time > nextShotTime)
                 {
-                    Instantiate(bullet, transform.position, transform.
-                        rotation);
-                    fired = false;
+                    Debug.Log("Fired");
+					nextShotTime = Time.time + msBetweenShots / 1000f;
+                    Projectile bullet = Instantiate(projectile, transform.forward * 1.1f + transform.position, transform.rotation) as Projectile;
+					bullet.SetSpeed(shotSpeed);
                 }
             }
         }
