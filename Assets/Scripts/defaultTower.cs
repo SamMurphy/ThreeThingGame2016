@@ -57,7 +57,6 @@ public class defaultTower : MonoBehaviour
                 transform.LookAt(currentTarget.transform);
 				if (Time.time > nextShotTime)
                 {
-                    Debug.Log("Fired");
 					nextShotTime = Time.time + msBetweenShots / 1000f;
                     Projectile bullet = Instantiate(projectile, transform.forward * 1.1f + transform.position, transform.rotation) as Projectile;
 					bullet.SetSpeed(shotSpeed);
