@@ -12,7 +12,9 @@ public class ProjectileGravityBomb : Projectile {
 	void Start () {
         rb = GetComponent<Rigidbody>();
         damage = 0;
-	}
+
+        GetComponent<TrailRenderer>().material.SetColor("_Color", trailColour);
+    }
 
     public override void SetSpeed(float newSpeed)
     {
