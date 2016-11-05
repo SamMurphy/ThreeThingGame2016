@@ -31,7 +31,6 @@ public class EnemyScript : MonoBehaviour, IDamageable
     {
         Health = maxHealth;
         bodyParts = GetComponentsInChildren<Transform>();
-        GetComponent<NavMeshAgent>().destination = target.transform.position;
     }
 	
 	// Update is called once per frame
@@ -52,11 +51,11 @@ public class EnemyScript : MonoBehaviour, IDamageable
         else
         {
             GetComponent<NavMeshAgent>().destination = target.transform.position;
-            if (Vector3.Distance(transform.position, target.transform.position) < range)
+            if (Vector3.Distance(transform.position, target.transform.position) < range) // If in range
             {
                 RaycastHit hit;
                 Ray ray = new Ray(transform.position, (target.transform.position - transform.position));
-                if (Physics.Raycast(ray, out hit, range, collisionMask))
+                if (Physics.Raycast(ray, out hit, range, collisionMask)) // If there is a line of sight
                 {
                     if (hit.transform.gameObject == target)
                     {
@@ -69,8 +68,14 @@ public class EnemyScript : MonoBehaviour, IDamageable
                     else
                     {
                         GetComponent<Animator>().SetBool("melee", false);
+                        GetComponent<Animator>().SetBool("ranged", false);
                     }
                 }
+            }
+            else
+            {
+                GetComponent<Animator>().SetBool("melee", false);
+                GetComponent<Animator>().SetBool("ranged", false);
             }
 
             if (currentFireTime > 0)
@@ -81,6 +86,7 @@ public class EnemyScript : MonoBehaviour, IDamageable
     public void SetTarget(GameObject obj)
     {
         target = obj;
+        GetComponent<NavMeshAgent>().destination = target.transform.position;
     }
 
     public void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
@@ -113,11 +119,13 @@ public class EnemyScript : MonoBehaviour, IDamageable
     private void meleeAttack()
     {
         GetComponent<Animator>().SetBool("melee", true);
+        // TODO call takeDamage() on player.
     }
 
     private void rangedAttack()
     {
-
+        GetComponent<Animator>().SetBool("ranged", true);
+        // TODO create projectile aimed at the player.
     }
 
     private void Death()
