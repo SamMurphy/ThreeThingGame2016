@@ -4,10 +4,11 @@ using System.Collections;
 public class GravityBomb : MonoBehaviour {
 
     public float Radius = 5f;
+    public float LifeTime = 3f;
 
 	// Use this for initialization
 	void Start () {
-	
+        Destroy(gameObject, LifeTime);
 	}
 	
 	// Update is called once per frame
