@@ -16,6 +16,9 @@ public class EnemyScript : MonoBehaviour, IDamageable
     private float currentFireTime;
     private bool throwing = false;
 
+	GameObject player;
+	PlayerScript playerScript;
+
     public float maxHealth;
     private float Health;
 
@@ -29,6 +32,8 @@ public class EnemyScript : MonoBehaviour, IDamageable
     public float gravityCountMax;
 
     // Disintegration Death
+	public ParticleSystem deathEffect;
+	public ParticleSystem bulletHitEffect;
     private bool disintegrationDeath = false;
     private Transform[] bodyParts; // 0 = head, 1 = body, 2 = left hand, 3 = right hand
     
@@ -38,6 +43,8 @@ public class EnemyScript : MonoBehaviour, IDamageable
         Health = maxHealth;
         currentFireTime = 60;
         bodyParts = GetComponentsInChildren<Transform>();
+		player = GameObject.FindGameObjectWithTag ("Player");
+		playerScript = player.GetComponent<PlayerScript> ();
     }
 	
 	// Update is called once per frame
@@ -48,8 +55,10 @@ public class EnemyScript : MonoBehaviour, IDamageable
             transform.position += gravityDeathVector * Time.deltaTime;
             transform.Rotate(gravityDeathVector);
             gravityCount++;
-            if (gravityCount >= gravityCountMax)
-                Death();
+			if (gravityCount >= gravityCountMax) {
+				Destroy(Instantiate(deathEffect.gameObject, transform.position, Quaternion.FromToRotation(Vector3.forward, Vector3.one)) as GameObject, deathEffect.startLifetime);
+				Death ();
+			}
         }
         else if(disintegrationDeath)
         {
@@ -98,19 +107,19 @@ public class EnemyScript : MonoBehaviour, IDamageable
         GetComponent<NavMeshAgent>().destination = target.transform.position;
     }
 
-    public void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
-    {
-        //if (damage >= Health)
-        //    Destroy(Instantiate(deathEffect.gameObject, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)) as GameObject, deathEffect.startLifetime);
-        GravityDeath(hitDirection);
-        TakeDamage(damage);
-    }
+	public void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
+	{
+		if (damage >= Health)
+			Destroy(Instantiate(deathEffect.gameObject, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)) as GameObject, deathEffect.startLifetime);
+		Destroy(Instantiate(bulletHitEffect.gameObject, transform.position, Quaternion.FromToRotation(Vector3.back, hitDirection)) as GameObject, bulletHitEffect.startLifetime);
+		TakeDamage(damage);
+	}
 
-    public void TakeDamage(float damage)
-    {
-        Health -= damage;
-        //if (Health <= 0) DisintegrationDeath();
-    }
+	public void TakeDamage(float damage)
+	{
+		Health -= damage;
+		if (Health <= 0) Death();
+	}
 
     public void GravityDeath(Vector3 projVec)
     {
@@ -128,7 +137,7 @@ public class EnemyScript : MonoBehaviour, IDamageable
     private void meleeAttack()
     {
         GetComponent<Animator>().SetBool("melee", true);
-        // TODO call takeDamage() on player.
+		playerScript.TakeDamage (5);
     }
 
     private void rangedAttack() // The animation is schedueled to throw projectile at the 60th frame of animation, animation ends at the 120th frame.
@@ -151,6 +160,8 @@ public class EnemyScript : MonoBehaviour, IDamageable
 
     private void Death()
     {
+		playerScript.score += 75;
+		playerScript.UpdateScore ();
         Destroy(this.gameObject);
     }
 }

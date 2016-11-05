@@ -666,7 +666,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.475
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -717,7 +717,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -809,7 +809,7 @@ MonoBehaviour:
   - {fileID: 4000011609537954}
   shell: {fileID: 4000012824094314, guid: 3a0969d2c6e6e7d4fb1d8e4760601800, type: 2}
   shellEjection: {fileID: 4000010949131638}
-  shootAudio: {fileID: 8300000, guid: 548b1d118a7bad643a93cf932b583859, type: 3}
+  shootAudio: {fileID: 8300000, guid: d9308abccad155849b3f91ba7ce8f9d3, type: 3}
   reloadAudio: {fileID: 8300000, guid: f3017fa6acdf86c4c90d3938a92b3ccc, type: 3}
   kickMinMax: {x: 0.05, y: 0.2}
   recoilAngleMinMax: {x: 3, y: 5}

@@ -22,7 +22,7 @@ GameObject:
   - 33: {fileID: 33000010698447848}
   - 135: {fileID: 135000013989573620}
   - 23: {fileID: 23000012824491152}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - 33: {fileID: 33000010882071128}
   - 135: {fileID: 135000010517299224}
   - 23: {fileID: 23000011621939422}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sphere (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - 33: {fileID: 33000011476480592}
   - 135: {fileID: 135000010753314892}
   - 23: {fileID: 23000010040265044}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - 33: {fileID: 33000013996392958}
   - 135: {fileID: 135000012775237734}
   - 23: {fileID: 23000010153821124}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,9 +94,9 @@ GameObject:
   - 114: {fileID: 114000012290539002}
   - 195: {fileID: 195000011552577914}
   - 95: {fileID: 95000012268797214}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -348,9 +348,15 @@ MonoBehaviour:
   rangedCharacter: 0
   range: 2
   fireRate: 0
+  bullet: {fileID: 0}
+  bulletSpeed: 0
   maxHealth: 100
   target: {fileID: 0}
   gravityCountMax: 500
+  deathEffect: {fileID: 198000010724357726, guid: f091281f13fa94941a40ea96c0279aa7,
+    type: 2}
+  bulletHitEffect: {fileID: 198000012963294102, guid: c105f9c44adc0d3449c05e1481fd2a66,
+    type: 2}
 --- !u!135 &135000010517299224
 SphereCollider:
   m_ObjectHideFlags: 1

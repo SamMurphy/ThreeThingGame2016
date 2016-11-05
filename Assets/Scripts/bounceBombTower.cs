@@ -13,6 +13,9 @@ public class bounceBombTower : MonoBehaviour
 	float nextShotTime;
 	public float shotSpeed;
 
+	public AudioClip shootAudio;
+
+	AudioSource source;
 
 	// Use this for initialization
 	void Start()
@@ -60,6 +63,7 @@ public class bounceBombTower : MonoBehaviour
 					nextShotTime = Time.time + msBetweenShots / 1000f;
 					BounceBombProjectile bullet = Instantiate(projectile, transform.forward * 1.1f + transform.position, transform.rotation) as BounceBombProjectile;
 					bullet.SetSpeed(shotSpeed);
+					source.PlayOneShot(shootAudio, 1);
 				}
 			}
 		}

@@ -8,7 +8,9 @@ public class ProjectileBouncing : Projectile {
 
 	// Use this for initialization
 	void Start () {
-        //Destroy(gameObject, lifetime);
+		lifetime = 6;
+		damage = 50;
+        Destroy(gameObject, lifetime);
         rb = GetComponent<Rigidbody>();
 	}
 
@@ -28,7 +30,7 @@ public class ProjectileBouncing : Projectile {
 
     protected override void OnHitObject(Collider c, Vector3 hitPoint)
     {
-        IDamageable damageableObject = c.GetComponent<IDamageable>();
+		IDamageable damageableObject = c.GetComponentInParent<IDamageable> ();
         if (damageableObject != null)
         {
             damageableObject.TakeHit(damage, hitPoint, transform.forward);

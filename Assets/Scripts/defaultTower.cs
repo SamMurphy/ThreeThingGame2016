@@ -13,11 +13,14 @@ public class defaultTower : MonoBehaviour
 	float nextShotTime;
 	public float shotSpeed;
 
+	public AudioClip shootAudio;
+
+	AudioSource source;
 
     // Use this for initialization
     void Start()
     {
-
+		source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -60,6 +63,7 @@ public class defaultTower : MonoBehaviour
 					nextShotTime = Time.time + msBetweenShots / 1000f;
                     Projectile bullet = Instantiate(projectile, transform.forward * 1.1f + transform.position, transform.rotation) as Projectile;
 					bullet.SetSpeed(shotSpeed);
+					source.PlayOneShot(shootAudio, 1);
                 }
             }
         }
