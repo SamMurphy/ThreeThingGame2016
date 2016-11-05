@@ -8,6 +8,7 @@ public class ProjectileBouncing : Projectile {
 
 	// Use this for initialization
 	void Start () {
+        //Destroy(gameObject, lifetime);
         rb = GetComponent<Rigidbody>();
 	}
 

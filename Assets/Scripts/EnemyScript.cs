@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyScript : MonoBehaviour
+public class EnemyScript : MonoBehaviour, IDamageable
 {
     public LayerMask collisionMask;
 
@@ -11,7 +11,7 @@ public class EnemyScript : MonoBehaviour
     private float currentFireTime;
 
     public float maxHealth;
-    private float health;
+    private float Health;
 
     private bool playerIsTarget;
     public GameObject target;
@@ -29,7 +29,7 @@ public class EnemyScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        health = maxHealth;
+        Health = maxHealth;
         bodyParts = GetComponentsInChildren<Transform>();
         GetComponent<NavMeshAgent>().destination = target.transform.position;
     }
@@ -83,11 +83,18 @@ public class EnemyScript : MonoBehaviour
         target = obj;
     }
 
+    public void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
+    {
+        //if (damage >= Health)
+        //    Destroy(Instantiate(deathEffect.gameObject, hitPoint, Quaternion.FromToRotation(Vector3.forward, hitDirection)) as GameObject, deathEffect.startLifetime);
+        GravityDeath(hitDirection);
+        TakeDamage(damage);
+    }
+
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0)
-            Death();
+        Health -= damage;
+        //if (Health <= 0) DisintegrationDeath();
     }
 
     public void GravityDeath(Vector3 projVec)
