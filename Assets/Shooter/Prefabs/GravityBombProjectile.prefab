@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 1000012739866640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.349, y: 1.315, z: -11.853}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -58,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0be752ca7b82f9445a51b7e0ed1a2068, type: 2}
+  - {fileID: 2100000, guid: 9f8a169ba39f1e345a75f27e78d8e9f3, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -80,7 +80,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012739866640}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &54000010563457806
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -138,7 +138,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Time: 0.2
-  m_StartWidth: 0.1
+  m_StartWidth: 0.3
   m_EndWidth: 0
   m_Colors:
     m_Color[0]:
@@ -155,7 +155,7 @@ TrailRenderer:
       rgba: 4294967295
     m_Color[4]:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 4294967295
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
 --- !u!114 &114000010780166648
@@ -172,6 +172,6 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 4294967039
-  trailColour: {r: 1, g: 0.84827596, b: 0, a: 0}
+  trailColour: {r: 1, g: 0, b: 0, a: 1}
   gravityBomb: {fileID: 114000010521932818, guid: f9c59b992ebbaae4d9935906378e785c,
     type: 2}
