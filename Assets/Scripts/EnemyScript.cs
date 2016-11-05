@@ -3,12 +3,18 @@ using System.Collections;
 
 public class EnemyScript : MonoBehaviour, IDamageable
 {
+    // When creating enemy, be sure to call SetTarget() and pass the gameobject the enemy will attack.
+
     public LayerMask collisionMask;
 
+    // Ranged attacks
     public bool rangedCharacter;
     public float range;
     public float fireRate;
+    public GameObject bullet;
+    public float bulletSpeed;
     private float currentFireTime;
+    private bool throwing = false;
 
     public float maxHealth;
     private float Health;
@@ -24,12 +30,13 @@ public class EnemyScript : MonoBehaviour, IDamageable
 
     // Disintegration Death
     private bool disintegrationDeath = false;
-    private Transform[] bodyParts;
+    private Transform[] bodyParts; // 0 = head, 1 = body, 2 = left hand, 3 = right hand
     
 	// Use this for initialization
 	void Start ()
     {
         Health = maxHealth;
+        currentFireTime = 60;
         bodyParts = GetComponentsInChildren<Transform>();
     }
 	
@@ -50,8 +57,9 @@ public class EnemyScript : MonoBehaviour, IDamageable
         }
         else
         {
-            GetComponent<NavMeshAgent>().destination = target.transform.position;
-            if (Vector3.Distance(transform.position, target.transform.position) < range) // If in range
+            if (throwing)
+                rangedAttack();
+            else if (Vector3.Distance(transform.position, target.transform.position) < range) // If in range
             {
                 RaycastHit hit;
                 Ray ray = new Ray(transform.position, (target.transform.position - transform.position));
@@ -61,7 +69,10 @@ public class EnemyScript : MonoBehaviour, IDamageable
                     {
                         // Attack
                         if (rangedCharacter)
-                            rangedAttack();
+                        {
+                            throwing = true;
+                            currentFireTime = 0;
+                        }
                         else
                             meleeAttack();
                     }
@@ -74,12 +85,10 @@ public class EnemyScript : MonoBehaviour, IDamageable
             }
             else
             {
+                GetComponent<NavMeshAgent>().destination = target.transform.position;
                 GetComponent<Animator>().SetBool("melee", false);
                 GetComponent<Animator>().SetBool("ranged", false);
             }
-
-            if (currentFireTime > 0)
-                --currentFireTime;
         }
     }
 
@@ -122,10 +131,22 @@ public class EnemyScript : MonoBehaviour, IDamageable
         // TODO call takeDamage() on player.
     }
 
-    private void rangedAttack()
+    private void rangedAttack() // The animation is schedueled to throw projectile at the 60th frame of animation, animation ends at the 120th frame.
     {
+        transform.LookAt(target.transform.position);
         GetComponent<Animator>().SetBool("ranged", true);
-        // TODO create projectile aimed at the player.
+        ++currentFireTime;
+        if (currentFireTime == fireRate/2) // When animation is half way through, fire projectile.
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Projectile p = Instantiate(bullet, bodyParts[3].transform.position, bodyParts[3].transform.rotation) as Projectile;
+            p.SetSpeed(bulletSpeed);            
+        }
+        else if(currentFireTime >= fireRate) // When animation is complete, reset.
+        {
+            currentFireTime = 0;
+            throwing = false;
+        }
     }
 
     private void Death()
